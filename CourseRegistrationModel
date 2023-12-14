@@ -1,0 +1,192 @@
+package zxc;
+import java.util.*;
+
+class CourseRegistrationModel {
+
+    enum TeacherType {
+        PROFESSOR, DOCTOR
+    }
+
+    class Lesson {
+    }
+
+    class Mark {
+    }
+
+    class Specialty {
+    }
+
+    class ResearchProject {
+    }
+
+    class ResearchPaper {
+    }
+
+    class UrgencyComplaint {
+    }
+
+    public static class Faculty {
+
+        public final Faculty SCIENCE = new Faculty();
+        public final Faculty ENGINEERING = new Faculty();
+		public static Faculty valueOf(String upperCase) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+    }
+
+    class Course {
+        private String courseName;
+        private Faculty faculty;
+        private int yearOfStudy;
+        private List<Teacher> teachers = new ArrayList<>();
+
+        public Course(String courseName, Faculty faculty, int yearOfStudy) {
+            this.courseName = courseName;
+            this.faculty = faculty;
+            this.yearOfStudy = yearOfStudy;
+        }
+
+        public void addTeacher(Teacher teacher) {
+            teachers.add(teacher);
+        }
+    }
+
+    class Student {
+        private List<Course> courses = new ArrayList<>();
+        private String name;
+        private String major;
+
+        public void approveRegistration(List<Course> approvedCourses) {
+            for (Course course : approvedCourses) {
+                enrollCourse(course);
+            }
+        }
+
+        private void enrollCourse(Course course) {
+            courses.add(course);
+        }
+
+        public List<Course> getCourses() {
+            return courses;
+        }
+
+        public Student(String name, String major) {
+            this.name = name;
+            this.major = major;
+        }
+    }
+
+    class Teacher {
+        private List<Course> courses = new ArrayList<>();
+
+        public void addLessonToSchedule(Lesson lesson) {
+        }
+    }
+
+    class ORManager {
+        private List<Course> courses = new ArrayList<>();
+        private List<Teacher> teachers = new ArrayList<>();
+        private List<Student> students = new ArrayList<>();
+
+        public void addRegistrationCourse(Faculty faculty, String courseName, int yearOfStudy) {
+            Course newCourse = new Course(courseName, faculty, yearOfStudy);
+            courses.add(newCourse);
+        }
+
+        public void addTeacher(String name, TeacherType type) {
+            Teacher newTeacher = new Teacher();
+            teachers.add(newTeacher);
+        }
+
+        public void addStudent(String name, String major) {
+            Student newStudent = new Student(name, major);
+            students.add(newStudent);
+        }
+
+        public void approveRegistration(List<Course> courses, Student student) {
+            student.approveRegistration(courses);
+        }
+
+        public Lesson createLesson() {
+            return new Lesson();
+        }
+
+        public List<Course> getCourses() {
+            return courses;
+        }
+
+        public List<Teacher> getTeachers() {
+            return teachers;
+        }
+
+        public List<Student> getStudents() {
+            return students;
+        }
+
+        private Scanner scanner = new Scanner(System.in);
+
+        public void addUserInputCourse() {
+            System.out.println("Enter course details:");
+            System.out.print("Faculty (SCIENCE/ENGINEERING): ");
+            Faculty faculty = null;
+			try {
+				faculty = Faculty.valueOf(scanner.nextLine().toUpperCase());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            System.out.print("Course Name: ");
+            String courseName = scanner.nextLine();
+            System.out.print("Year of Study: ");
+            int yearOfStudy = Integer.parseInt(scanner.nextLine());
+
+            addRegistrationCourse(faculty, courseName, yearOfStudy);
+        }
+
+        public void addUserInputStudent() {
+            System.out.println("Enter student details:");
+            System.out.print("Name: ");
+            String name = scanner.nextLine();
+            System.out.print("Major: ");
+            String major = scanner.nextLine();
+
+            addStudent(name, major);
+        }
+
+        public void addUserInputTeacher() {
+            System.out.println("Enter teacher details:");
+            System.out.print("Name: ");
+            String name = scanner.nextLine();
+            System.out.print("Teacher Type (PROFESSOR/DOCTOR): ");
+            TeacherType type = TeacherType.valueOf(scanner.nextLine().toUpperCase());
+
+            addTeacher(name, type);
+        }
+
+        public void main(String[] args) {
+            ORManager orManager = new ORManager();
+            Scanner scanner = new Scanner(System.in);
+
+            // Add courses
+            orManager.addUserInputCourse();
+            orManager.addUserInputCourse();
+
+            // Add students
+            orManager.addUserInputStudent();
+            orManager.addUserInputStudent();
+
+            // Add teachers
+            orManager.addUserInputTeacher();
+            orManager.addUserInputTeacher();
+
+            // Register students for courses
+            Student alice = orManager.getStudents().get(0);
+            Course javaCourse = orManager.getCourses().get(0);
+            orManager.approveRegistration(Arrays.asList(javaCourse), alice);
+
+            scanner.close();
+        }
+    }
+}
