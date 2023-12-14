@@ -1,7 +1,7 @@
 package zxc;
 import java.util.*;
 
-class CourseRegistrationModel {
+public class CourseRegistrationModel {
 
     enum TeacherType {
         PROFESSOR, DOCTOR
@@ -26,14 +26,12 @@ class CourseRegistrationModel {
     }
 
     public static class Faculty {
-
-        public final Faculty SCIENCE = new Faculty();
-        public final Faculty ENGINEERING = new Faculty();
+        public static final Faculty SCIENCE = new Faculty();
+        public static final Faculty ENGINEERING = new Faculty();
 		public static Faculty valueOf(String upperCase) {
 			// TODO Auto-generated method stub
 			return null;
 		}
-
     }
 
     class Course {
@@ -131,12 +129,11 @@ class CourseRegistrationModel {
             System.out.println("Enter course details:");
             System.out.print("Faculty (SCIENCE/ENGINEERING): ");
             Faculty faculty = null;
-			try {
-				faculty = Faculty.valueOf(scanner.nextLine().toUpperCase());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            try {
+                faculty = Faculty.valueOf(scanner.nextLine().toUpperCase());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             System.out.print("Course Name: ");
             String courseName = scanner.nextLine();
             System.out.print("Year of Study: ");
@@ -167,7 +164,6 @@ class CourseRegistrationModel {
 
         public void main(String[] args) {
             ORManager orManager = new ORManager();
-            Scanner scanner = new Scanner(System.in);
 
             // Add courses
             orManager.addUserInputCourse();
@@ -188,5 +184,9 @@ class CourseRegistrationModel {
 
             scanner.close();
         }
+    }
+
+    public static void main(String[] args) {
+        new CourseRegistrationModel().new ORManager().main(args);
     }
 }
